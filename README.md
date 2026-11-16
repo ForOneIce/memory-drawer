@@ -30,6 +30,13 @@ npm test         # 运行测试(vitest)
 npm run build    # 构建正式版本
 ```
 
+## 部署(GitHub Pages)
+
+推送到 `main` 分支后,`.github/workflows/deploy.yml` 会自动运行测试、构建并发布到 GitHub Pages,
+地址是 `https://foroneice.github.io/memory-drawer/`。
+
+首次使用需要在仓库的 **Settings → Pages → Build and deployment → Source** 里选择 **GitHub Actions**。
+
 技术栈:Vite + React + TypeScript + Dexie(IndexedDB)。
 
 ## 许可协议

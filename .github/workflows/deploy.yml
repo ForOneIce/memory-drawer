@@ -1,0 +1,59 @@
+name: 部署到 GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# 只给部署需要的最小权限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同一时间只部署一次,新的推送会排在后面,不会打断正在进行的部署
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: 安装依赖
+        run: npm ci
+
+      # 测试通过才会继续构建。个人样本测试在云端没有样本文件,会自动跳过
+      - name: 运行测试
+        run: npm test
+
+      # 构建脚本里包含 tsc 类型检查
+      - name: 构建
+        run: npm run build
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: app/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
