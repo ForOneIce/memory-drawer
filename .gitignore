@@ -1,0 +1,36 @@
+# ============================================================
+# 隐私:测试账号的聊天导出数据,绝对不要提交到 git
+# 这些文件夹/压缩包里是真实的个人聊天记录和账号信息
+# ============================================================
+deepseek_data*/
+doubao_data*/
+kimi_data*/
+chatgpt_data*/
+gemini_data*/
+grok_data*/
+*_data-*/
+*_data_*/
+*_data/
+*.zip
+dev-fixtures/
+**/dev-fixtures/
+
+# 个人测试数据:各平台聊天导出的原始文件和原格式样本,不对外公开
+testdata/
+**/testdata/
+
+# 内部开发文档(需求评审记录等),不对外公开
+docs/
+**/docs/
+
+# 依赖与构建产物
+node_modules/
+dist/
+dev-dist/
+*.log
+
+# 编辑器 / 系统
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
